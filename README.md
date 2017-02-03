@@ -35,15 +35,17 @@ gbmFit1 <- train(DOS ~ ., data = training,
 # covariates on DOS with the various training data set and then calculating the R^2 and RMSE.
 # The data equal the training data we set up earlier and the trControl equals the fitControl function, which tells R
 # to conduct ten cross fold valdiation 10 tens.
+# Cross validation is a process for reducing out of sample error.  When you only test your predictions on one set of data,
+# it is unclear how well the predictions will hold with new data.  Therefore, the cross validiation allows the user to break the data into 
+# several sections of testing and training data sets so that the model can be tested with new data.  Here the settings are test the model with 
+# ten different test sets and repeat this process ten times.
 # gbm is a Stochastic Gradient Boosting that is used for regression and classification such classifying students as drop out or not.
 # The main point of the function above to produce a model that can provide a probability of a student dropping out based upon the included
 # covariates.  The function above fits the model to the training set specified by the trControl function.
 
-
-
-
-# There are four pieces of output.  Essentially, R is telling us the criteria it used to decide on the best model.  
-# First is the interaction depth. 
+# There are four pieces of output.  R uses the RMSE of the models.  RMSE is measured in the same units as the test set.  
+# The CARET package in R uses RMSE to select the best model.  It choose the first model with an RMSE of .17, which means
+# that when making predictions about a student's drop out rate, it is off about 17%. 
 predict(gbmFit1, newdata = head(testing))
 # This gives the probabilities that the students will be dropout.  It just 
 # gives the first few values though.
